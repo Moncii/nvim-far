@@ -2,6 +2,7 @@ local M = {}
 
 -- Keybindigs
 local map = vim.api.nvim_set_keymap
+local unmap = vim.api.nvim_del_keymap
 local opts = {noremap = true, silent = true}
 
 -- find_input and replace
@@ -14,7 +15,6 @@ local event = require("nui.utils.autocmd").event
 M.findText = function(mode)
 
     local replaceMode = mode
-
     local find = vim.call("expand", "<cword>")
 
     if(find ~= "") then
@@ -54,6 +54,10 @@ M.findText = function(mode)
             end,
 
         })
+
+        replaceInput:map("n", "<Esc>", function()
+            replaceInput:unmount()
+        end, {noremap = true})
 
         replaceInput:mount()
 
