@@ -41,8 +41,10 @@ M.findAndReplace = function(mode)
 
             if(mode == "file") then
                 vim.cmd("%s/"..find.."/"..replace.."/g")
+                vim.cmd("match Search /"..replace.."/")
             else
                 vim.cmd([[%s/\%V]]..find.."/"..replace.."/g")
+                vim.cmd([[match Search /\%V]]..replace.."/")
             end
 
             vim.cmd('let @/ = ""')
@@ -64,8 +66,8 @@ end
 
 M.setup = function(opts)
 
-    map("n", "<leader>fr", ":lua require'far'.findAndReplace('file')<CR>", opts)
-    map("v", "<leader>sr", ":lua require'far'.findAndReplace('selection')<CR>", opts)
+    map("n", "<leader>frr", ":lua require'far'.findAndReplace('file')<CR>", opts)
+    map("v", "<leader>fr", ":lua require'far'.findAndReplace('selection')<CR>", opts)
 
 end
 
